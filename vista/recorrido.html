@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+<script src="../js/jquery.min.js"></script>
+  <script src="../js/bootstrap2.min.js"></script>
+  <script src="../js/boostrap-modal.js"></script>
+    <meta charset="UTF-8">
+    <TITLE>Area de usuarios
+</TITLE>
+        <script>                     
+            function salir(){
+                location.href="frontend_controller.php?flag=true";
+            }
+        </script>
+        <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="shortcut icon" href="../Imagenes/JoaquinVGonzalez222.ico">
+
+        <link rel="stylesheet" href="../css/Styles-m1.css"> 
+    <link rel="stylesheet" href="../css/Styles-m2.css">
+           <link rel="stylesheet" href="../css/bootstrap.css">
+        
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/abm.css">
+        
+        
+        <link rel="stylesheet" href="../leaflet/leaflet.css" />
+                <script src="../leaflet/leaflet.js"></script>
+                <script src="../leaflet/geocoder/Control.Geocoder.js"></script>
+                 <link rel="stylesheet" href="../leaflet/routing/leaflet-routing-machine.css">
+                <link rel="stylesheet" href="../leaflet/geocoder/Control.Geocoder.css">
+                <script src="../leaflet/routing/leaflet-routing-machine.js"></script>
+        
+</head>
+<body>  
+    {% include 'navbar.html'%}
+    <div class="real-Body main_wrapper"> 
+            <div class="lineal-banner">
+                        <img id="banner-v1" src="../Imagenes/banner.png" title="banner" alt="Banner" >
+                        <img id="escudoUNLP-v1" src="../Imagenes/escudo-UNLP.jpg.png" title="escudo" alt="Escudo" >
+                        <div class="text-tittle">{{titulo}}</div>
+               </div>
+            <div class="main_container">
+            <div class="contents">
+                <ul>
+</ul>   {% if array|length > 0 %}
+    
+                
+	<div id="map" style="width: 80%; height: 600px;align:center"></div>
+                                      
+
+                                    
+
+                                                      
+                                                        <script>
+                                                                if (navigator.geolocation) navigator.geolocation.getCurrentPosition(crearMapa);
+
+                                                                function crearMapa(position) {
+                                                                        	miLat = position.coords.latitude;
+                                                                                miLon = position.coords.longitude;
+                                                                                var map = L.map('map').setView([miLat,miLon], 13);
+
+                                                                                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
+                                                                                        maxZoom: 18,
+                                                                                        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                                                                                                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                                                                                                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                                                                                        id: 'mapbox.streets'
+                                                                                }).addTo(map);
+
+                                                                                L.marker([miLat,miLon]).addTo(map).bindPopup("<b>Yo</b>");
+
+                                                                        var alumnos=new Array();
+                                                                        {% for i in 0..cantDir %}
+                                                                                L.marker([{{ array[i]['lat'] }}, {{ array[i]['lon'] }}]).addTo(map).bindPopup("<b>{{array[i]['nombre']}}</b>").openPopup();
+                                                                        {% endfor %}
+
+                                                                        var popup = L.popup();
+
+                                                                        L.Routing.control({
+                                                                                   waypoints: [
+                                                                                                L.latLng(miLat, miLon),
+                                                                                                {% for i in 0..cantDir %}
+                                                                                                        L.latLng({{ array[i]['lat'] }}, {{ array[i]['lon'] }}){% if i < cantDir %},{%endif%}{%endfor%}
+                                                                                        ],
+                                                                                        routeWhileDragging: false
+                                                                        }).addTo(map);
+
+                                                 
+                                                                }
+                                                        </script>
+
+
+
+
+
+
+
+  
+        {% else %}
+            
+            <h3>No se seleccionaron alumnos </h3>
+         
+         {%endif%}
+            
+             </div>
+            
+        </div>
+  
+    <footer>{{contacto}}</footer>
+    </div>
+  </body>
+</html>
+

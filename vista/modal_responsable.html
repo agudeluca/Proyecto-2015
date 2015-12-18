@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Responsable</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="../controlador/controlador_responsable.php">
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input id="nombre" type="text" class="form-control" name="nombre" placeholder="Introduzca su Nombre" pattern="[A-Za-z' ']{4,10}" required>
+          </div>
+            <div class="form-group">
+            <label for="apellido">Apellido:</label>
+            <input id="apellido" type="text" class="form-control" name="apellido" placeholder="Introduzca su Apellido" pattern="[A-Za-z' ']{4,10}" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" type="email" class="form-control" name="mail" placeholder="Introduzca su Email" required>
+          </div>
+          <div class="form-group">
+		  <label for="tipo">Tipo:</label>
+            <select id="tipo"class="form-control" id="sel1" name="tipo" required>
+              <option>Madre</option>
+              <option>Padre</option>
+              <option>Tutor</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="direccion">Dirección:</label>
+            <input id="direccion" type="text" class="form-control" name="direccion" placeholder="Introduzca su domicilio" required>
+          </div>
+          <div class="form-group">
+            <label for="telefono">Telefono:</label>
+            <input id="telefono" type="number" class="form-control" name="telefono" placeholder="Introduzca su Telefono" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="sexo">Sexo:</label>
+          <div class="form-group">
+            <select class="form-control" id="sexo" name="sexo" required>
+              <option>Masculino</option>
+              <option>Femenino</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <div class='input-group date' id='date'>
+                    <input id="fecha_nacimiento" type='date' class="form-control" name="fecha_nacimiento" required/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                 </div>
+              </div>
+            <h4>Se creara un Usuario</h4>
+            <div class="form-group">
+            <label for="usuario">Ingrese nombre de Usuario:</label>
+            <input id="usuario" type="text" class="form-control" name="usuario" placeholder="Introduzca un nombre de Usuario" required>
+          </div>
+            
+          <div class="form-group">
+            <label for="password">Ingrese password:</label>
+            <input id="password" type="password" class="form-control" name="password" placeholder="Introduzca un Password" required>
+          </div>
+        
+      </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary btn">Guardar cambios</button>
+        
+      </div>
+        </form>
+    </div>
+  </div>
+</div>

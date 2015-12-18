@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+<script src="../js/jquery.min.js"></script>
+  <script src="../js/bootstrap2.min.js"></script>
+  <script src="../js/boostrap-modal.js"></script>
+    <meta charset="UTF-8">
+    <TITLE>Area de usuarios
+</TITLE>
+        <script>                     
+            function salir(){
+                location.href="frontend_controller.php?flag=true";
+            }
+        </script>
+        <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="shortcut icon" href="../Imagenes/JoaquinVGonzalez222.ico">
+
+        <link rel="stylesheet" href="../css/Styles-m1.css"> 
+    <link rel="stylesheet" href="../css/Styles-m2.css">
+           <link rel="stylesheet" href="../css/bootstrap.css">
+        
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/abm.css">
+        
+
+</head>
+<body>  
+    {% include 'navbar.html'%}
+    <div class="real-Body main_wrapper"> 
+            <div class="lineal-banner">
+                        <img id="banner-v1" src="../Imagenes/banner.png" title="banner" alt="Banner" >
+                        <img id="escudoUNLP-v1" src="../Imagenes/escudo-UNLP.jpg.png" title="escudo" alt="Escudo" >
+                        <div class="text-tittle">{{titulo}}</div>
+               </div>
+            <div class="main_container">
+            <div class="contents">
+                <ul>
+</ul>   {% if alumnos|length > 0 %}
+            <table class="table table-striped" >   <!--id='tabla-alumnos'-->
+        
+          <caption ><h4>{%if funcion=='listado'%}Alumnos activos en el sistema</h4></caption>
+                                      {%elseif funcion=='elegirpago'%}Elija el alumno al que quiera registrar el pago o la beca de una cuota/matricula.</h4></caption>
+                      
+                                      {%endif%}
+                                      
+            <thead>                          
+                                      
+                                      {% if elimino_alumno %} <div class="alert alert-success alert-dismissable">
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					  <strong>El Alumno </strong> se elimino correctamente.
+						</div>  {% endif %}
+
+          <tr>
+            <th id='col_dni'>Nº de documento</th>
+            <th id='col_ape' >Apellido</th>
+            <th id='col_nom' >Nombre</th>
+              <th class="fecha_en_tabla" id='col_fecnac'>Nacimiento</th>
+              <th id='col_sexo'>Sexo</th>
+              <th id='col_email'>Email</th>
+              <th id='col_dire'>Dirección</th>
+              <th class="fecha_en_tabla" id='col_fecing'>Ingreso</th>
+               <th class="fecha_en_tabla" id='col_feceg'>Egreso</th>
+            <th id='col_acc'>Acciónes</th>
+          </tr>
+        </thead>
+        {% for alumno in alumnos %}
+         <tr>
+          <td headers='col_dni'>{{alumno['numeroDoc']}}</td>
+          <td headers='col_ape'>{{alumno['apellido']}}</td>
+          <td headers='col_nom'>{{alumno['nombre']}}</td>
+          <td  headers='col_fecnac'>{{alumno['fechaNacimiento']}}</td>
+          <td headers='col_sexo'>{{alumno['sexo']}}</td>
+          <td headers='col_email'>{{alumno['mail']}}</td>
+          <td headers='col_dire'>{{alumno['direccion']}}</td>
+          <td headers='col_fecing'>{{alumno['fechaIngreso']}}</td>
+          <td  headers='col_feceg'>{{alumno['fechaEgreso']}}</td>
+          <td  headers='col_acc'>
+            {%if funcion=='listado'%}
+            
+            <FORM   action='../controlador/controlador_modificarAlumno.php' method='POST'>
+              <input  title='Modificar la información del alumno' class='iconoListado' type="image" src="../Imagenes/iconoModif.png" alt="Modificar alumno" name='idalumnoCarga' value='{{alumno['id']}}' />
+            </FORM>
+
+            <img  data-toggle="modal" data-target="#{{alumno['id']}}" class='iconoListado' alt='Eliminar alumno' title='Eliminar alumno' src='../Imagenes/iconoElim.png'>
+            {%else%}
+            <FORM   action='../controlador/controlador_registrarPagoElejirCuota.php' method='POST'>
+              <input  title='Modificar la información del alumno' class='iconoListado' type="image" src="../Imagenes/iconoModif.png" alt="Modificar alumno" name='idalumno' value='{{alumno['id']}}' />
+            </FORM>
+              {%endif%}
+
+
+            
+
+            </td>
+        </tr>
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id='{{alumno['id']}}' aria-labelledby="myLargeModalLabel" style="display: none;">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title" id="myLargeModalLabel">Confirme eliminación del alumno {{alumno['nombre']}} {{alumno['apellido']}} </h4>
+                </div>
+                <div class="modal-body">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Cancelar</button>
+                    <form method='post' action='#'>
+                      <button type='submit' name='ideliminar' value='{{alumno['id']}}' class="btn btn-danger">Confirmar</button>
+                    </form>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div>
+        {% endfor %}
+    </table>
+    {% include 'barra_paginacion.html' %}
+        {% else %}
+            
+            <h3>No hay alumnos registrados</h3>
+         
+         {%endif%}
+            
+             </div>
+            
+        </div>
+  
+    <footer>{{contacto}}</footer>
+    </div>
+  </body>
+</html>
+

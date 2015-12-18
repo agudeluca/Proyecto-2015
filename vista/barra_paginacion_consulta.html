@@ -1,0 +1,9 @@
+<ul id="paginacion-consultas" class="pagination">
+            {% if paginaactual == 1 %} <li class="disabled"><span>&laquo;</span></li> 
+            {% else %}<li><a href="../controlador/controlador_listadosAlumnosConMatricula.php?pag={{paginaactual-1}}&tipodel={{datospost}}" >&laquo;</a></li>  {%endif%}
+            {% for i in 1..cantpaginas %}
+            <li {% if i == paginaactual %}class="active"{%endif%} ><a href="../controlador/controlador_listadosAlumnosConMatricula.php?pag={{i}}&tipodel={{datospost}}">{{i}}</a></li>
+            {% endfor %}
+            {% if paginaactual == cantpaginas %}<li  class="disabled" ><span>&raquo;</span></li> 
+            {% else %}<li><a href="../controlador/controlador_listadosAlumnosConMatricula.php?pag={{paginaactual+1}}&tipodel={{datospost}}" >&raquo;</a></li> {% endif %}
+          </ul>
